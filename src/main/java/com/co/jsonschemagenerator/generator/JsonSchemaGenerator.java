@@ -13,7 +13,7 @@ import com.github.victools.jsonschema.generator.SchemaVersion;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class JsonSchemaGenerator
+public class JsonSchemaGenerator extends AbstractJsonSchemaGenerator
 {
 
 	private SchemaGenerator generator;
@@ -30,16 +30,16 @@ public class JsonSchemaGenerator
 		generator = new SchemaGenerator(config);
 	}
 
+	@Override
 	public void generate(Class<?> clazz)
 	{
 
 		log.info("Generating Json Schema...");
 		JsonNode jsonSchema = generator.generateSchema(clazz);
 
-		FileWriter writer;
 		try
 		{
-			writer = new FileWriter(clazz.getName() + ".json");
+			FileWriter writer = new FileWriter(clazz.getName() + ".json");
 			writer.write(jsonSchema.toString());
 			writer.close();
 		}
@@ -47,7 +47,7 @@ public class JsonSchemaGenerator
 		{
 			log.error("Json Schema couldn't be generated: " + e.getMessage());
 		}
-		
+
 		log.info("Json Schema generated");
 
 	}
