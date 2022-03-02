@@ -6,8 +6,6 @@ import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
-import org.springframework.lang.Nullable;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
@@ -19,13 +17,9 @@ import lombok.ToString;
 @ToString
 public class TestTypesDto implements Serializable
 {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -680996837223788859L;
 
 	@JsonProperty(required = false)
-	@Nullable
 	private String stringNotRequired;
 
 	@JsonProperty(required = true)
