@@ -4,14 +4,15 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.github.victools.jsonschema.generator.Option;
 import com.github.victools.jsonschema.generator.OptionPreset;
 import com.github.victools.jsonschema.generator.SchemaGenerator;
 import com.github.victools.jsonschema.generator.SchemaGeneratorConfig;
 import com.github.victools.jsonschema.generator.SchemaGeneratorConfigBuilder;
 import com.github.victools.jsonschema.generator.SchemaVersion;
-import com.github.victools.jsonschema.generator.impl.module.ConstantValueModule;
-import com.github.victools.jsonschema.generator.impl.module.FlattenedOptionalModule;
-import com.github.victools.jsonschema.generator.impl.module.SimpleTypeModule;
+import com.github.victools.jsonschema.module.jackson.JacksonModule;
+import com.github.victools.jsonschema.module.jackson.JacksonOption;
+import com.github.victools.jsonschema.module.javax.validation.JavaxValidationModule;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,10 +29,11 @@ public class JsonSchemaGenerator extends AbstractJsonSchemaGenerator
 		{
 			version = SchemaVersion.valueOf(schemaVersion);
 		}
-		SchemaGeneratorConfigBuilder configBuilder = new SchemaGeneratorConfigBuilder(version, OptionPreset.PLAIN_JSON);
-		configBuilder.with(new ConstantValueModule());
-		configBuilder.with(new FlattenedOptionalModule());
-		configBuilder.with(new SimpleTypeModule());
+		JacksonModule jacksonModule = new JacksonModule(JacksonOption.RESPECT_JSONPROPERTY_ORDER, JacksonOption.RESPECT_JSONPROPERTY_REQUIRED,
+				JacksonOption.FLATTENED_ENUMS_FROM_JSONPROPERTY, JacksonOption.FLATTENED_ENUMS_FROM_JSONVALUE);
+		JavaxValidationModule javaxValidationModule = new JavaxValidationModule();
+		SchemaGeneratorConfigBuilder configBuilder = new SchemaGeneratorConfigBuilder(version, OptionPreset.PLAIN_JSON).with(jacksonModule)
+				.with(javaxValidationModule).with(Option.DEFINITIONS_FOR_ALL_OBJECTS, Option.NULLABLE_FIELDS_BY_DEFAULT);
 		SchemaGeneratorConfig config = configBuilder.build();
 		generator = new SchemaGenerator(config);
 	}
