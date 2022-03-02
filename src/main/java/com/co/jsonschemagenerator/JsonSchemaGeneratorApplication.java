@@ -22,7 +22,11 @@ public class JsonSchemaGeneratorApplication implements CommandLineRunner
 	{
 		String clazz = JsonSchemaGeneratorFactory.DEFAULT_GENERATOR;
 		String schemaVersion = null;
-		if (args.length > 0)
+		if (args.length == 1)
+		{
+			clazz = args[0];
+		}
+		else if (args.length > 1)
 		{
 			clazz = args[0];
 			schemaVersion = args[1];
@@ -31,7 +35,7 @@ public class JsonSchemaGeneratorApplication implements CommandLineRunner
 		JsonSchemaGeneratorFactory factory = new JsonSchemaGeneratorFactory();
 
 		AbstractJsonSchemaGenerator generator = factory.generator(clazz, schemaVersion);
-		generator.generate(TestTypesDto.class);
+		generator.generate(new TestTypesDto());
 	}
 
 }
