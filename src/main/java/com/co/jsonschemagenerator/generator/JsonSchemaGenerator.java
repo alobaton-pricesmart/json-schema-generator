@@ -33,6 +33,7 @@ public class JsonSchemaGenerator
 	public void generate(Class<?> clazz)
 	{
 
+		log.info("Generating Json Schema...");
 		JsonNode jsonSchema = generator.generateSchema(clazz);
 
 		FileWriter writer;
@@ -46,6 +47,8 @@ public class JsonSchemaGenerator
 		{
 			log.error("Json Schema couldn't be generated: " + e.getMessage());
 		}
+		
+		log.info("Json Schema generated");
 
 	}
 
