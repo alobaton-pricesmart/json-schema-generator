@@ -6,12 +6,14 @@ import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
+import com.co.jsonschemagenerator.annotations.GenerateJsonSchema;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import lombok.Data;
 import lombok.ToString;
 
+@GenerateJsonSchema
 @JsonPropertyOrder
 @Data
 @ToString

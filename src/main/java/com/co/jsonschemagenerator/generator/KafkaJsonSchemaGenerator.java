@@ -18,13 +18,15 @@ public class KafkaJsonSchemaGenerator extends AbstractJsonSchemaGenerator
 	@Override
 	public void generate(Object object)
 	{
+		Class<?> cls = object.getClass();
+		String className = cls.getSimpleName();
+
 		try
 		{
-			log.info("Generating Json Schema...");
+			log.info("Generating " + className + " Json Schema ");
 			JsonSchema jsonSchema = JsonSchemaUtils.getSchema(object);
 
-			Class<?> cls = object.getClass();
-			FileWriter writer = new FileWriter(cls.getName() + ".json");
+			FileWriter writer = new FileWriter(className + ".json");
 			writer.write(jsonSchema.toString());
 			writer.close();
 		}
@@ -32,6 +34,6 @@ public class KafkaJsonSchemaGenerator extends AbstractJsonSchemaGenerator
 		{
 			log.error("Json Schema couldn't be generated: " + e.getMessage());
 		}
-		log.info("Json Schema generated");
+		log.info(className + " Json Schema generated");
 	}
 }

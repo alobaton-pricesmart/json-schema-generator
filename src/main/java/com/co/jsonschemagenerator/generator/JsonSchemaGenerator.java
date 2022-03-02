@@ -43,12 +43,14 @@ public class JsonSchemaGenerator extends AbstractJsonSchemaGenerator
 	{
 
 		Class<?> cls = object.getClass();
-		log.info("Generating Json Schema...");
+		String className = cls.getSimpleName();
+
+		log.info("Generating " + className + " Json Schema ");
 		JsonNode jsonSchema = generator.generateSchema(cls);
 
 		try
 		{
-			FileWriter writer = new FileWriter(cls.getName() + ".json");
+			FileWriter writer = new FileWriter(className + ".json");
 			writer.write(jsonSchema.toString());
 			writer.close();
 		}
@@ -57,7 +59,7 @@ public class JsonSchemaGenerator extends AbstractJsonSchemaGenerator
 			log.error("Json Schema couldn't be generated: " + e.getMessage());
 		}
 
-		log.info("Json Schema generated");
+		log.info(className + " Json Schema generated");
 
 	}
 
